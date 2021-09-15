@@ -1,6 +1,9 @@
 *{
     font-family: 'Urbanist', sans-serif;
 }
+a{
+    cursor: pointer;
+}
 h1{
     padding-left: 15px;
     font-family: 'Rampart One', cursive;
@@ -79,6 +82,12 @@ a:hover::after{
 .high{
     font-size: 25px;
 }
+.math, .math button{
+    margin:auto;
+    text-align:center;
+    font-size: 22px;
+
+}
 
 li a:link,li a:visited{
     text-decoration: none;
@@ -109,5 +118,11 @@ header{
     background-color: #e0c097;
     color: black;
     border-radius: 8px;
+}
+.menu{
+    position: sticky;
+    top:0;
+    background-color: #2d2424;
+    
 }
 
