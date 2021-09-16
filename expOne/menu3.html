@@ -32,19 +32,74 @@
             <b class="high"><em>This is PROCEDURE / SIMULATION Tab</em></b><br>
             <strong class="high">Patch Antenna</strong> <em> Math Details </em><br>
 
+            <hr><br>
             <section class = "math">
-                <b> Value of Frequency in GHz </b><br>
-                <input type="text" id="aval"><br>
-                <b> Dielectric constant (Er) </b><br>
-                <input type="text" id="bval"><br>
-                <b> h in mm </b><br>
-                <input type="text" id="cval"><br><br>
+
+                <table>
+                    <tr>
+                        <td><b> Value of Frequency in GHz </b><br>
+                            <input type="text" id="aval"><br>
+                        </td>
+                        <td>
+                            <strong class="high" id="wid"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b> Dielectric constant (Er) </b><br>
+                            <input type="text" id="bval"><br>
+                        </td>
+                        <td>
+                            <strong class="high" id="len"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b> h in mm </b><br>
+                            <input type="text" id="cval"><br>
+                        </td>
+                        <td>
+                            <strong class="high" id="ans"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td>
+                            <strong class="high" id="eff"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td>
+                            <strong class="high" id="gain"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td>
+                            <strong class="high" id="z0"></strong><br>
+                        </td>
+                    </tr>
+                </table>
+
                 <button onclick="calc()"> CALCULATE </button>
                 <br>
+                <hr>
 
-                <strong class="high" id="wid"></strong><br>
-                <strong class="high" id="len"></strong><br>
-                <strong class="high" id="ans"></strong><br>
+                <div id="showImg" class="edit">
+                    <img src="micant.jpg" style="width:100%;">
+                    <div class="lenpos">23.55</div>
+                    <div class="widpos">23.55</div>
+                    <div class="hpos">23.55</div>
+                    <div class="erpos">23.55</div>
+                </div>
+
             </section>
 
 
@@ -72,10 +127,13 @@
                 var lambda0 = 30 / parseFloat(freq);
                 var rr = ( 120 * lambda0 )/( 1 - (((k0**2) * (parseFloat(h)**2))/24));
 
-                if(!isNaN(width) && !isNaN(length) && !isNaN(rr)){
-                    document.getElementById("wid").innerHTML = " The width of the patch antenna is  " + width + " mm";
-                    document.getElementById("len").innerHTML = " The length of the patch antenna is " + length + " mm";
-                    document.getElementById("ans").innerHTML = " The radiation Resistance value is  " + rr + " ohms";
+                if(!isNaN(width) && !isNaN(length) && !isNaN(rr) && !isNaN(Eff) && !isNaN(Gain) && !isNaN(z0)) ){
+                    document.getElementById("wid").innerHTML  = " Width =  " + width + " mm";
+                    document.getElementById("len").innerHTML  = " Length =  " + length + " mm";
+                    document.getElementById("ans").innerHTML  = " Radiation Resistance =  " + rr + " ohms";
+                    document.getElementById("eff").innerHTML  = " Efficiency =  " + Eff + " ";
+                    document.getElementById("gain").innerHTML = " Gain =  " + Gain + " dB";
+                    document.getElementById("z0").innerHTML   = " Char. Impedance =  " + Eff + " ohms";
                 }
             }
 

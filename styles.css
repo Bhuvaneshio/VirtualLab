@@ -88,6 +88,10 @@ a:hover::after{
     font-size: 22px;
 
 }
+input{
+    width:auto;
+    background-color: none;
+}
 
 li a:link,li a:visited{
     text-decoration: none;
@@ -125,4 +129,32 @@ header{
     background-color: #2d2424;
     
 }
-
+table{
+    width:100%;
+}
+td{
+    margin:auto;
+    width:50%;
+}
+.edit {
+    position: relative;
+    text-align: center;
+    font-size:15px;
+    
+}
+.lenpos{
+    position:absolute;
+    top:49%;
+    left:43%;
+}
+.widpos{
+    position:absolute;
+    top:33%;
+    right:30%;
+}
+.hpos{
+    position:absolute;
+}
+.erpos{
+    position: absolute;
+}
