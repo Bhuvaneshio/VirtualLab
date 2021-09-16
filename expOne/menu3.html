@@ -67,7 +67,7 @@
                         
                         </td>
                         <td>
-                            <strong class="high" id="eff"></strong><br>
+                            <strong class="high" id="eff"></strong><br><br>
                         </td>
                     </tr>
                     <tr>
@@ -75,7 +75,7 @@
                         
                         </td>
                         <td>
-                            <strong class="high" id="gain"></strong><br>
+                            <strong class="high" id="gain"></strong><br><br>
                         </td>
                     </tr>
                     <tr>
@@ -83,7 +83,7 @@
                         
                         </td>
                         <td>
-                            <strong class="high" id="z0"></strong><br>
+                            <strong class="high" id="z0"></strong><br><br>
                         </td>
                     </tr>
                 </table>
@@ -126,8 +126,11 @@
                 
                 var lambda0 = 30 / parseFloat(freq);
                 var rr = ( 120 * lambda0 )/( 1 - (((k0**2) * (parseFloat(h)**2))/24));
+                var Eff = 0;
+                var Gain = 0;
+                var z0=0;
 
-                if(!isNaN(width) && !isNaN(length) && !isNaN(rr) && !isNaN(Eff) && !isNaN(Gain) && !isNaN(z0)) ){
+                if(!isNaN(width) && !isNaN(length) && !isNaN(rr) && !isNaN(Eff) && !isNaN(Gain) && !isNaN(z0)) {
                     document.getElementById("wid").innerHTML  = " Width =  " + width + " mm";
                     document.getElementById("len").innerHTML  = " Length =  " + length + " mm";
                     document.getElementById("ans").innerHTML  = " Radiation Resistance =  " + rr + " ohms";

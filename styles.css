@@ -130,10 +130,11 @@ header{
     
 }
 table{
-    width:100%;
+    width:60%;
+    margin:auto;
 }
 td{
-    margin:auto;
+    text-align:left;
     width:50%;
 }
 .edit {
