@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> EXPERIMENT ONE </title>
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Play&family=Rampart+One&family=Urbanist:wght@200&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1> Experiment - 1 - PATCH ANTENNA MEASUREMENTS </h1>
+            <ul class="inline">
+                <li class="high"> <a href="../index.html" target="blank" class="simple"><b>Virtual</b> <em>Lab</em></a> </li>
+                <li class="high"> <strong>MIC Experiments</strong> </li>
+
+            </ul>
+        </header>
+        <br>
+        <section class="menu">
+            <ul class="inline">
+                <li><a href="index.html">Aim</a></li>
+                <li><a href="menu2.html">Theory</a></li>
+                <li class="selected"><a href="menu3.html">Procedure</a></li>
+                <li class="last"><a>Result</a></li>
+                
+            </ul>
+        <hr>
+        </section>
+        
+        <section class="content">
+            <b class="high"><em>This is PROCEDURE / SIMULATION Tab</em></b><br>
+            <strong class="high">Patch Antenna</strong> <em> Math Details </em><br>
+
+            <hr><br>
+            <section class = "math">
+
+                <table>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td class="smol">
+                            Width 
+                        </td>
+                        <td class="smol">
+                            <strong class="high" id="wid"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b> Value of Frequency in GHz </b><br>
+                            <input type="text" id="aval"><br>
+                            
+                        </td>
+                        <td class="smol">
+                            Length 
+                        </td>
+                        <td class="smol">
+                            <strong class="high" id="len"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b> Dielectric constant (Er) </b><br>
+                            <input type="text" id="bval"><br>
+                            
+                        </td>
+                        <td class="smol">
+                            Rad. resistance 
+                        </td>
+                        <td class="smol">
+                            <strong class="high" id="ans"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b> h in mm </b><br>
+                            <input type="text" id="cval"><br>
+                        
+                        </td>
+                        <td class="smol">
+                            Efficiency 
+                        </td>
+                        <td class="smol">
+                            <strong class="high" id="eff"></strong><br><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td class="smol">
+                            Gain 
+                        </td>
+                        <td class="smol">
+                            <strong class="high" id="gain"></strong><br><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td class="smol">
+                            Char. Impedance 
+                        </td>
+                        <td class="smol">
+                            <strong class="high" id="z0"></strong><br><br>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                <button onclick="calc()" id="toggle"> CALCULATE </button>
+                <br>
+                <hr>
+
+                <div id="showImg" class="edit">
+                    <img src="micant1.png" style="width:20%;">
+                    <strong>
+                    <div class="lenpos">L = <em id="len1"></em></div>
+                    <div class="widpos">w = <em id="wid1"></em></div>
+                    <div class="hpos">h = <em id="h1"></em></div>
+                    <div class="erpos">Er = <em id="er1"></em></div>
+                    </strong>
+                </div>
+
+            </section>
+
+
+
+        </section>
+        <script>
+            
+            function calc(){
+                const targetDiv = document.getElementById("showImg");
+                const btn = document.getElementById("toggle");
+
+                var freq = document.getElementById("aval").value;
+                var er = document.getElementById("bval").value;
+                var h = document.getElementById("cval").value;
+                
+                h = parseFloat(h);
+                var width = (150 * (2**0.5)) / (parseFloat(freq) * ((parseFloat(er) + 1)**0.5) ) ;
+                var ereff = ((parseFloat(er)+1.0)/2.0) + ((parseFloat(er)-1)/(2.0 * ((1.0 + (12.0*parseFloat(h)/parseFloat(width)))**0.5)) );
+                var c1 = (150) / (parseFloat(freq) * (parseFloat(ereff)**0.5) );
+                var n1 = (parseFloat(ereff) + 0.3) * ((parseFloat(width)/parseFloat(h))+0.264) ;
+                var d1 = (parseFloat(ereff) - 0.258) * ((parseFloat(width)/parseFloat(h))+0.8) ;
+                var q = n1 / d1;
+                var c2 = 0.824 * parseFloat(h) * parseFloat(q);
+                var length = c1 - c2; 
+
+                var k0 = 2 * Math.PI * parseFloat(freq) / 30;
+                var k0d = k0 * parseFloat(h);
+                var Psp = ( 377 * (k0**2) * (k0d**(2/3)) )/(Math.PI * ( 1 - (1/ereff) + ((2/5)/ereff**2) ));
+                
+                var lambda0 = 30 / parseFloat(freq);
+                var rr = ( 120 * lambda0 )/( 1 - (((k0**2) * (parseFloat(h)**2))/24));
+                
+                var lambda = 30 / (parseFloat(freq)*(ereff**0.5));
+                var Leff = lambda/2;
+
+                var s = (ereff-1)**(0.5);
+                var k0ds = k0d*s;
+                var alpha0 = s*Math.tan(k0ds);
+                var alpha1 = -((Math.tan(k0ds)+k0ds)/(Math.cos(k0ds)**(2)));
+                var x0d = (ereff**2)-(alpha1**2);
+                var x0n = -(ereff**2)+ alpha0*alpha1+ ereff*((ereff**2)- (2*alpha1*alpha0) + (alpha0**2))**0.5;
+                var x0 = 1+(x0n/x0d);
+                
+                var Psur = 377*(k0**2/4)*ereff*((x0**2)-1)/((ereff*(1/((x0**2)-1)**0.5)+(((x0**2)-1)**0.5)/(ereff-(x0**2)))+k0d*(1+(ereff**2)*((x0**2)-1)/(ereff-((x0**2)-1))));
+                
+                var Eff = Psp/(Psp+Psur);
+
+                var Gain = 10*Math.log10(Eff*2*Math.PI*Leff*width/(lambda0));
+
+                var x = ((0.6)*Math.PI/((parseFloat(er))**0.5))- (0.441);
+                
+                var W0;
+                var z0=0;
+
+                if((parseFloat(er)**0.5)*50 <= 120)
+                {
+                    W0 = parseFloat(h)*x ;
+                }
+                else
+                {
+                    W0 = parseFloat(h)*(0.85-((0.6-x)**0.5));
+                }   
+
+                if(W0<=h){
+                    z0 = (60/((ereff**0.5))*(Math.log((8*(parseFloat(h))/W0)+(W0/4*(parseFloat(h))))));
+                }
+                else{
+                    z0 = ((120*Math.pi)/(ereff**0.5))*(((W0/parseFloat(h))+1.393+0.667*Math.log((W0/parseFloat(h))+1.444))**(-1));
+                }
+                
+                width = parseFloat(width).toFixed(4);
+                length = parseFloat(length).toFixed(4);
+                rr = parseFloat(rr).toFixed(4);
+                Eff = parseFloat(Eff).toFixed(4);
+                Gain = parseFloat(Gain).toFixed(4);
+                z0 = parseFloat(z0).toFixed(4);
+                document.getElementById("len1").innerHTML = length+" mm";
+                document.getElementById("wid1").innerHTML = width+" mm";
+                document.getElementById("h1").innerHTML   = h+" mm";
+                document.getElementById("er1").innerHTML  = er;
+                
+
+                if(!isNaN(width) && !isNaN(length) && !isNaN(rr) && !isNaN(Eff) && !isNaN(Gain) && !isNaN(z0)) {
+                    document.getElementById("wid").innerHTML  =  width + " mm";
+                    document.getElementById("len").innerHTML  =  length + " mm";
+                    document.getElementById("ans").innerHTML  =  rr + " ohms";
+                    document.getElementById("eff").innerHTML  =  Eff + " ";
+                    document.getElementById("gain").innerHTML =  Gain + " dB";
+                    document.getElementById("z0").innerHTML   =  z0 + " ohms";
+                }
+
+                targetDiv.style.display = "block";
+
+            }
+
+        </script>
+    </body>
+</html>
