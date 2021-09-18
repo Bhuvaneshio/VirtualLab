@@ -135,27 +135,38 @@ table{
 }
 td{
     text-align:left;
-    width:50%;
+    width:30%;
 }
+.smol{
+    text-align:center;
+    border:1px solid black;
+    vertical-align: middle;
+}
+
 .edit {
     position: relative;
     text-align: center;
     font-size:15px;
+    display:none;
     
 }
 .lenpos{
     position:absolute;
     top:49%;
-    left:43%;
+    left: 45%;
 }
 .widpos{
     position:absolute;
-    top:33%;
-    right:30%;
+    top:35%;
+    right:38%;
 }
 .hpos{
     position:absolute;
+    left:43%;
+    top:60%;
 }
 .erpos{
     position: absolute;
+    top:80%;
+    right:50%;
 }

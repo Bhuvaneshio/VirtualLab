@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> EXPERIMENT ONE </title>
+        <link rel="stylesheet" href="../styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Play&family=Rampart+One&family=Urbanist:wght@200&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <h1> Experiment - 1 - PATCH ANTENNA MEASUREMENTS </h1>
+            <ul class="inline">
+                <li class="high"> <a href="../index.html" target="blank" class="simple"><b>Virtual</b> <em>Lab</em></a> </li>
+                <li class="high"> <strong>MIC Experiments</strong> </li>
+
+            </ul>
+        </header>
+        <br>
+        <section class="menu">
+            <ul class="inline">
+                <li><a href="index.html">Aim</a></li>
+                <li><a href="menu2.html">Theory</a></li>
+                <li class="selected"><a href="menu3.html">Procedure</a></li>
+                <li class="last"><a>Result</a></li>
+                
+            </ul>
+        <hr>
+        </section>
+        
+        <section class="content">
+            <b class="high"><em>This is PROCEDURE / SIMULATION Tab</em></b><br>
+            <strong class="high">Patch Antenna</strong> <em> Math Details </em><br>
+
+            <hr><br>
+            <section class = "math">
+
+                <table>
+                    <tr>
+                        <td><b> Value of Frequency in GHz </b><br>
+                            <input type="text" id="aval"><br>
+                        </td>
+                        <td>
+                            <strong class="high" id="wid"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b> Dielectric constant (Er) </b><br>
+                            <input type="text" id="bval"><br>
+                        </td>
+                        <td>
+                            <strong class="high" id="len"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b> h in mm </b><br>
+                            <input type="text" id="cval"><br>
+                        </td>
+                        <td>
+                            <strong class="high" id="ans"></strong><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td>
+                            <strong class="high" id="eff"></strong><br><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td>
+                            <strong class="high" id="gain"></strong><br><br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        
+                        </td>
+                        <td>
+                            <strong class="high" id="z0"></strong><br><br>
+                        </td>
+                    </tr>
+                </table>
+
+                <button onclick="calc()"> CALCULATE </button>
+                <br>
+                <hr>
+
+                <div id="showImg" class="edit">
+                    <img src="micant.jpg" style="width:100%;">
+                    <div class="lenpos">23.55</div>
+                    <div class="widpos">23.55</div>
+                    <div class="hpos">23.55</div>
+                    <div class="erpos">23.55</div>
+                </div>
+
+            </section>
+
+
+
+        </section>
+        <script>
+            
+            function calc(){
+                var freq = document.getElementById("aval").value;
+                var er = document.getElementById("bval").value;
+                var h = document.getElementById("cval").value;
+                h = parseFloat(h) / 10;
+                var width = (150 * (2**0.5)) / (parseFloat(freq) * ((parseFloat(er) + 1)**0.5) ) ;
+                var ereff = ((parseFloat(er)+1.0)/2.0) + ((parseFloat(er)-1)/(2.0 * ((1.0 + (12.0*parseFloat(h)/parseFloat(width)))**0.5)) );
+                var c1 = (150) / (parseFloat(freq) * (parseFloat(ereff)**0.5) );
+                var n1 = (parseFloat(ereff) + 0.3) * ((parseFloat(width)/parseFloat(h))+0.264) ;
+                var d1 = (parseFloat(ereff) - 0.258) * ((parseFloat(width)/parseFloat(h))+0.8) ;
+                var q = n1 / d1;
+                var c2 = 0.824 * parseFloat(h) * parseFloat(q);
+                var length = c1 - c2; 
+
+                var k0 = 2 * Math.PI * parseFloat(freq) / 30;
+                var k0d = k0 * parseFloat(h);
+                var Psp = ( 377 * (k0**2) * (k0d**(2/3)) )/(Math.PI * ( 1 - (1/ereff) + ((2/5)/ereff**2) ));
+                
+                var lambda0 = 30 / parseFloat(freq);
+                var rr = ( 120 * lambda0 )/( 1 - (((k0**2) * (parseFloat(h)**2))/24));
+                var Eff = 0;
+                var Gain = 0;
+                var z0=0;
+
+                if(!isNaN(width) && !isNaN(length) && !isNaN(rr) && !isNaN(Eff) && !isNaN(Gain) && !isNaN(z0)) {
+                    document.getElementById("wid").innerHTML  = " Width =  " + width + " mm";
+                    document.getElementById("len").innerHTML  = " Length =  " + length + " mm";
+                    document.getElementById("ans").innerHTML  = " Radiation Resistance =  " + rr + " ohms";
+                    document.getElementById("eff").innerHTML  = " Efficiency =  " + Eff + " ";
+                    document.getElementById("gain").innerHTML = " Gain =  " + Gain + " dB";
+                    document.getElementById("z0").innerHTML   = " Char. Impedance =  " + z0 + " ohms";
+                }
+            }
+
+        </script>
+    </body>
+</html>
