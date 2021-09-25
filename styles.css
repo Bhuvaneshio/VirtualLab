@@ -1,6 +1,9 @@
 *{
     font-family: 'Urbanist', sans-serif;
 }
+p{
+    font-size: 18px;
+}
 a{
     cursor: pointer;
 }
@@ -152,7 +155,7 @@ td{
 }
 .lenpos{
     position:absolute;
-    top:49%;
+    top:48%;
     left: 45%;
 }
 .widpos{
@@ -162,11 +165,11 @@ td{
 }
 .hpos{
     position:absolute;
-    left:43%;
+    left:41%;
     top:60%;
 }
 .erpos{
     position: absolute;
-    top:80%;
-    right:50%;
+    top:61%;
+    right:47%;
 }
